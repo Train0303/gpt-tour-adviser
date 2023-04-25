@@ -118,7 +118,7 @@ def get_temp_dataframe(regId: str) -> pd.DataFrame:
 
     # 관광지수는 9일까지만 제공하므로, 통일해준다. (max: 10이지만, 9까지만 돌림)
     for i in range(3, 10):
-        day = now + timedelta(days=i-1)
+        day = now + timedelta(days=i)
         taMin = temp_api_data[f'taMin{i}']
         taMax = temp_api_data[f'taMax{i}']
         temp_data.append({'날짜': day.strftime('%Y-%m-%d'), '기온코드': regId, '최소기온': str(taMin), '최대기온': str(taMax)})
@@ -135,7 +135,7 @@ def get_yooksang_dataframe(regId: str) -> pd.DataFrame:
     # am, pm은 7일까지만 제공, 데이터의 통일성을 위해, am, pm을 설정해준다.
     # 관광지수는 9일까지만 제공하므로, 통일해준다. (max: 10이지만, 9까지만 돌림)
     for i in range(3, 10):
-        day = now + timedelta(days=i-1)
+        day = now + timedelta(days=i)
         if i <= 7:
             rain_am = yooksang_api_data[f'rnSt{i}Am']
             rain_pm = yooksang_api_data[f'rnSt{i}Pm']
@@ -170,8 +170,11 @@ def get_tour_dataframe(city_area_id: str) -> pd.DataFrame:
 def get_total_dataframe():
     df_total = pd.DataFrame()
     df_merged = pd.read_csv('code_merged.csv', dtype={'투어코드': str})
+    counter = 1
 
     for row in df_merged.iterrows(): # row : [idx, {column1 : value1, .. }]
+        print(counter)
+        counter += 1
         code_tour = row[1]['투어코드']
         code_temp = row[1]['기온코드']
         code_yooksang = row[1]['육상코드']
