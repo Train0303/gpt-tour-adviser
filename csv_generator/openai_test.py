@@ -1,8 +1,14 @@
 import openai
+import json
+
+def get_servicekey() -> str:
+    with open("secrets.json") as f:
+        secrets = json.loads(f.read())
+    return secrets.get('openai_key')
 
 n = input("오늘부터 며칠간 여행을 가실건가요? : ")
 region = input("어디를 여행갈 예정이신가요? : ")
-openai.api_key = "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"
+openai.api_key = get_servicekey()
 completion = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages = [
