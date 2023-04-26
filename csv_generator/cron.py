@@ -1,7 +1,7 @@
 import json
 import time
 from datetime import datetime, timedelta
-
+import os
 import pandas as pd
 import requests
 
@@ -52,7 +52,7 @@ def get_temp_api(regId: str) -> list[dict]:
             break
         except:
             print("get_temp_api error")
-            time.sleep(3)
+            time.sleep(1)
 
     if response['response']['header']['resultCode'] != '00':
         ErrorMessage = response['response']['header']['resultMsg']
@@ -76,7 +76,7 @@ def get_yooksang_api(regId: str) -> list[dict]:
             break
         except:
             print("get_yooksang_api error")
-            time.sleep(3)
+            time.sleep(1)
 
     if response['response']['header']['resultCode'] != '00':
         ErrorMessage = response['response']['header']['resultMsg']
@@ -101,7 +101,7 @@ def get_tour_api(city_area_id: str) -> list[dict]:
             break
         except:
             print("get_tour_api error")
-            time.sleep(3)
+            time.sleep(1)
 
 
     if response['response']['header']['resultCode'] != '00':
@@ -196,12 +196,46 @@ def get_total_dataframe():
 
     return df_total
 
+def drop_yesterday_data(df_weather: pd.DataFrame) -> pd.DataFrame:
+    """
+    전날의 기상 데이터는 필요가 없으므로 엑셀에서 제거.
+    """
+    yesterday = (datetime.now() + timedelta(days=-1)).strftime("%Y-%m-%d")
+    # df_weather['날짜'] = df_weather['날짜'].apply(lambda date: datetime.strptime(date, '%Y-%m-%d').date())
+    df_weather.drop(df_weather[df_weather['날짜'] < yesterday].index, inplace=True)
+    return df_weather
+
+def drop_after_3days_data(df_weather: pd.DataFrame) -> pd.DataFrame:
+    """
+    3일 후의 데이터는 새로 갱신될 가능성이 높으므로 갱신을 위해 엑셀에서 제거해주는 코드.
+    """
+    three_days_after = (datetime.now() + timedelta(days=3)).strftime('%Y-%m-%d')
+    df_weather.drop(df_weather[df_weather['날짜'] >= three_days_after].index, inplace=True)
+    return df_weather
+
+
+def make_dateframe() -> pd.DataFrame:
+    """
+    API를 읽어와 3일~9일 후 기상 데이터를 만드는 코드.
+    """
+    columns = ['날짜', '전체도시이름', '도단위이름', '시군구이름', '최소기온', '최대기온', '오전날씨', '오전비확률', '오후날씨', '오후비확률', '관광지수', '관광지표']
+    df = get_total_dataframe()
+    df = df[columns].copy()
+    df.dropna(inplace=True)
+    df.set_index('날짜', inplace=True)
+    return df
+
 
 if __name__ == "__main__":
-    columns = ['날짜', '전체도시이름', '도단위이름', '시군구이름', '최소기온', '최대기온', '오전날씨', '오전비확률', '오후날씨', '오후비확률', '관광지수', '관광지표']
-    df_total = get_total_dataframe()
-    df_total = df_total[columns]
-    df_total.dropna(inplace=True)
-    df_total.set_index('날짜', inplace=True)
-    df_total.sort_values('날짜', inplace=True)
-    df_total.to_csv('city_with_weather.csv', encoding='utf-8')
+    if os.path.exists("./city_with_weather.csv"):
+        df_weather = pd.read_csv('./city_with_weather.csv')
+        df_weather = drop_yesterday_data(df_weather)
+        df_weather = drop_after_3days_data(df_weather)
+        df_weather.set_index('날짜', inplace=True)
+        df_update = make_dateframe()
+        df_result = pd.concat([df_weather, df_update])
+        df_result.sort_values('날짜', inplace=True)
+        df_result.to_csv('city_with_weather.csv', encoding='utf-8')
+    else:
+        df_result = make_dateframe()
+        df_result.to_csv('city_with_weather.csv', encoding='utf-8')
