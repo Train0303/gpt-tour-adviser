@@ -18,4 +18,6 @@ public class SearchOutput {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
+    
+    // 내용 출력하는 칼럼 추가해야함
 }
