@@ -28,9 +28,6 @@ public class Account {
     @Column(length = 100)
     private String name;
 
-    @Column(length = 20)
-    private String phoneNumber;
-
     @Enumerated(EnumType.STRING)
     private AccountStatus status = AccountStatus.INACTIVE;
 
