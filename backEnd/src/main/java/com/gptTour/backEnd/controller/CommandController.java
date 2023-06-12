@@ -36,13 +36,13 @@ public class CommandController {
         System.out.println(":: homeDirectory is " + homeDirectory);
 
         ProcessBuilder builder = new ProcessBuilder();
-        builder.directory(new File(homeDirectory));
+        builder.directory(new File("D:/git/gpt-tour-adviser/csv_generator"));
 
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
         System.out.println(":: OS is " + (isWindows ? "window" : "linux"));
 
         if(isWindows) {
-            builder.command("cmd.exe", "/c", "python D:/git/gpt-tour-adviser/csv_generator/test.py");
+            builder.command("cmd.exe", "/c", "python travel_adviser.py --start 20230615 --end 20230617 --region 부산");
         } else {
             builder.command("sh", "-c", "ls -l | grep P");
         }
