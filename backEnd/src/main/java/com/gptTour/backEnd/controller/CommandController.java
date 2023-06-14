@@ -1,6 +1,7 @@
 package com.gptTour.backEnd.controller;
 
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 
-@RestController
+@Controller
 public class CommandController {
 
     private static class StreamGobbler implements Runnable {
@@ -27,6 +28,11 @@ public class CommandController {
         public void run() {
             new BufferedReader(new InputStreamReader(inputStream, "CP949")).lines().forEach(consumer);
         }
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "index";
     }
 
     @GetMapping("/pytest")

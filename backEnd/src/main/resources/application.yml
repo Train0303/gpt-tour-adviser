@@ -7,6 +7,17 @@ spring:
     username: sa
     password: 1234
     driver-class-name: org.h2.Driver
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    cache: false
 
   jpa:
     hibernate:
