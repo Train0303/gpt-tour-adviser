@@ -55,7 +55,7 @@ if __name__ == '__main__':
                 {"role": "user", "content": user_message}
             ]
         )
-        print(completion)
+        # print(completion)
         result = completion['choices'][0]['message']['content']
         print(result)
     except Exception as e:

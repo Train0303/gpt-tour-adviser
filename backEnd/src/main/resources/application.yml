@@ -12,12 +12,12 @@ spring:
       enabled: true
     restart:
       enabled: false
-  thymeleaf:
-    prefix: classpath:/templates/
-    check-template-location: true
-    suffix: .html
-    mode: HTML
-    cache: false
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    check-template-location: true
+#    suffix: .html
+#    mode: HTML
+#    cache: false
 
   jpa:
     hibernate:
