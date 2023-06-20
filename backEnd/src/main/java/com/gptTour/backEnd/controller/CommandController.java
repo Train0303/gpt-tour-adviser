@@ -30,16 +30,20 @@ public class CommandController {
             result = new BufferedReader(new InputStreamReader(inputStream, "CP949")).lines().collect(Collectors.toList());
 //            getResult();
         }
+<<<<<<< Updated upstream
 
 //        synchronized void getResult() {
 //            result = temp;
 ////            System.out.println(result);
 //        }
     }
+=======
+>>>>>>> Stashed changes
 
-    @GetMapping("/")
-    public String home() {
-        return "index";
+//        synchronized void getResult() {
+//            result = temp;
+////            System.out.println(result);
+//        }
     }
 
     @GetMapping("/pytest")
@@ -49,13 +53,21 @@ public class CommandController {
         System.out.println(":: homeDirectory is " + homeDirectory);
 
         ProcessBuilder builder = new ProcessBuilder();
-        builder.directory(new File("D:/git/gpt-tour-adviser/csv_generator"));
+        builder.directory(new File("F:/git/gpt-tour-adviser/csv_generator"));
 
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
         System.out.println(":: OS is " + (isWindows ? "window" : "linux"));
 
         if(isWindows) {
+<<<<<<< Updated upstream
             builder.command("cmd.exe", "/c", "python travel_adviser.py --start " + start_date +  " --end " +  end_date + " --region " + region);
+=======
+<<<<<<< HEAD
+            builder.command("cmd.exe", "/c", "python travel_adviser.py --start 20230618 --end 20230620 --region 부산");
+=======
+            builder.command("cmd.exe", "/c", "python travel_adviser.py --start " + start_date +  " --end " +  end_date + " --region " + region);
+>>>>>>> python_in_java
+>>>>>>> Stashed changes
         } else {
             builder.command("sh", "-c", "ls -l | grep P");
         }

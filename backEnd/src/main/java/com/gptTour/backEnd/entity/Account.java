@@ -1,6 +1,7 @@
 package com.gptTour.backEnd.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,4 +47,15 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<SearchOutput> searchOutputs = new ArrayList<>();
 
+    @Builder
+    public Account(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
+//    public Account hashPassword(PasswordEncoder passwordEncoder){
+//        this.password = passwordEncoder.encode(this.password);
+//        return this;
+//    }
 }
