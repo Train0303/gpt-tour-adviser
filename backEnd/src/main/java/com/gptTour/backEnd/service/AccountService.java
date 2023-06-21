@@ -7,6 +7,7 @@ import com.gptTour.backEnd.exception.CustomException;
 import com.gptTour.backEnd.exception.ErrorCode;
 import com.gptTour.backEnd.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // 중복 검사 체크
     public void validateDuplicateAccount(String id) {
@@ -42,7 +43,7 @@ public class AccountService {
     public Long save(SignupRequest requestDto){
         validateDuplicateAccount(requestDto.getEmail());
         Account account = requestDto.toEntiy();
-//        account.hashPassword(bCryptPasswordEncoder);
+        account.hashPassword(bCryptPasswordEncoder);
 
         return accountRepository.save(account);
     }
