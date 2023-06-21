@@ -37,6 +37,6 @@ spring:
 #    org.hibernate.SQL: debug
 #    org.hibernate.type: trace
 
-#jwt:
-#  token:
-#    key: abcdefghijklm
+jwt:
+  token:
+    key: gpt-tour-Yeah~

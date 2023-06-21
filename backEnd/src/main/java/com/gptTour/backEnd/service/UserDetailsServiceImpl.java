@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("userID: " + email);
-        Optional<Account> account = accountRepository.findById(email);
+        Optional<Account> account = accountRepository.findByEmail(email);
         if(account.isPresent()) {
             return new UserDetailsImpl(account.get());
         } else {

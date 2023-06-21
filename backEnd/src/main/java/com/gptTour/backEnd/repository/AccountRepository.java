@@ -15,15 +15,15 @@ import java.util.Optional;
 public class AccountRepository {
     private final EntityManager em;
 
-    public Optional<Account> findById(String id){
+    public Optional<Account> findByEmail(String email){
         List<Account> account = em.createQuery("select a from Account a where a.email= :email", Account.class)
-                .setParameter("email", id)
+                .setParameter("email", email)
                 .getResultList();
         return account.stream().findAny();
     }
 
     public Long save(Account account){
-        if (findById(account.getEmail()).isEmpty()){
+        if (findByEmail(account.getEmail()).isEmpty()){
             em.persist(account);
             return account.getId();
         }
