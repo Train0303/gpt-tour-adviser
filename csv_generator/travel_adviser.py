@@ -39,22 +39,25 @@ def get_weather_data() -> str:
 
 
 if __name__ == '__main__':
-    parse_data: Namespace = parse_arguments()
-    weather_string: str = get_weather_data()
-    user_message: str =\
-        f"{parse_data.start}부터 {parse_data.end}까지 {parse_data.region}을 여행할 거야. 날씨를 고려해 날짜별로 관광지를 추천해줘."
+    try:
+        parse_data: Namespace = parse_arguments()
+        weather_string: str = get_weather_data()
+        user_message: str =\
+            f"{parse_data.start}부터 {parse_data.end}까지 {parse_data.region}을 여행할 거야. 날씨를 고려해 날짜별로 관광지를 추천해줘."
 
-    openai.api_key = get_servicekey()
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "너는 이제부터 관광지를 추천해주는 여행 가이드야."},
-            {"role": "system", "content": f"여행 가이드를 위한 {parse_data.region}에 대한 날짜 별 기상 자료는 다음과 같아.\n" + \
-                                          weather_string},
-            {"role": "user", "content": user_message}
-        ]
-    )
-    print(completion)
-    result = completion['choices'][0]['message']['content']
-    print(result)
+        openai.api_key = get_servicekey()
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "너는 이제부터 관광지를 추천해주는 여행 가이드야."},
+                {"role": "system", "content": f"여행 가이드를 위한 {parse_data.region}에 대한 날짜 별 기상 자료는 다음과 같아.\n" + \
+                                            weather_string},
+                {"role": "user", "content": user_message}
+            ]
+        )
+        # print(completion)
+        result = completion['choices'][0]['message']['content']
+        print(result)
+    except Exception as e:
+        print(e)
 
