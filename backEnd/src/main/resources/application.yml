@@ -13,7 +13,7 @@ spring:
     restart:
       enabled: false
 #  thymeleaf:
-#    prefix: classpath:/templates/
+#    prefix: classpath:templates/
 #    check-template-location: true
 #    suffix: .html
 #    mode: HTML

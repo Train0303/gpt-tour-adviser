@@ -7,13 +7,11 @@ import com.gptTour.backEnd.exception.CustomException;
 import com.gptTour.backEnd.exception.ErrorCode;
 import com.gptTour.backEnd.service.AccountService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-
 
 @RequiredArgsConstructor
 @RestController
@@ -22,11 +20,10 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String home() {
         return "home";
     }
-
 
     @PostMapping("/login")
     public ResponseDto loginMembers(@RequestBody LoginRequest loginRequest, HttpServletResponse response, HttpServletRequest request) {
