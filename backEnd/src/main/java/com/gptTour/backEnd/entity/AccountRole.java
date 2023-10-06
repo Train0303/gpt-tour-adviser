@@ -1,5 +1,5 @@
 package com.gptTour.backEnd.entity;
 
 public enum AccountRole {
-    USER, ADMIN
+    USER, ADMIN, SUPER_ADMIN
 }

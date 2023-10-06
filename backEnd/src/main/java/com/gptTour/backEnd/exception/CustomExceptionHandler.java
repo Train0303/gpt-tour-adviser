@@ -1,4 +1,4 @@
-package com.gptTour.backEnd.config;
+package com.gptTour.backEnd.exception;
 
 import com.gptTour.backEnd.dto.ResponseDto;
 import com.gptTour.backEnd.exception.CustomException;
@@ -13,7 +13,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity<Object> handleCustomErrorException(CustomException exception) {
         log.error("throw customException : {}", exception.getErrorCode());
-        ResponseDto restApiException = new ResponseDto(exception.getErrorCode().getHttpStatus().name(), exception.getErrorCode().getMessage(), "");
+        ResponseDto restApiException = new ResponseDto(exception.getErrorCode().getHttpStatus().value(), exception.getErrorCode().getHttpStatus().name(), exception.getErrorCode().getMessage(), "");
         return new ResponseEntity<>(restApiException, exception.getErrorCode().getHttpStatus());
     }
 }

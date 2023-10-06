@@ -13,7 +13,7 @@ spring:
     restart:
       enabled: false
 #  thymeleaf:
-#    prefix: classpath:/templates/
+#    prefix: classpath:templates/
 #    check-template-location: true
 #    suffix: .html
 #    mode: HTML
@@ -37,6 +37,6 @@ spring:
 #    org.hibernate.SQL: debug
 #    org.hibernate.type: trace
 
-#jwt:
-#  token:
-#    key: abcdefghijklm
+jwt:
+  token:
+    key: gpt-tour-Yeah~

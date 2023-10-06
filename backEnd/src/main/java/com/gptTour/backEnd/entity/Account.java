@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -54,8 +55,8 @@ public class Account {
         this.password = password;
     }
 
-//    public Account hashPassword(PasswordEncoder passwordEncoder){
-//        this.password = passwordEncoder.encode(this.password);
-//        return this;
-//    }
+    public Account hashPassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
+        return this;
+    }
 }
